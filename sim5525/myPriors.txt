@@ -1,0 +1,22 @@
+###############################################
+
+# Prior block chosen by BAMMtools::setBAMMpriors
+
+poissonRatePrior = 1.0
+
+lambdaInitPrior = 2778.13993414368
+
+lambdaShiftPrior = 1.15137314261701e-05
+
+muInitPrior = 2778.13993414368
+
+lambdaInitRootPrior = 13890.6996707184
+
+lambdaShiftRootPrior = 1.15137314261701e-05
+
+muInitRootPrior = 13890.6996707184
+
+#### End Prior block
+######################
+
+
