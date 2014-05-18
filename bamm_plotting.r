@@ -21,7 +21,7 @@ bamm.plot = function(simID, tree, edata, extantPops) {
   home.regions = merge(tips, home.reg, by = 'spp.name', sort = F)
   
   plot.bammdata(edata, lwd=1)  
-  cols = colorRampPalette(c('palegreen','darkgreen'))(10)
+  cols = colorRampPalette(c('violet', 'white','darkgreen'))(10)
   tiplabels(pch = 15, adj = 0.52, cex = 2, col = cols[home.regions$region])
 }
 
