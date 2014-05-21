@@ -11,7 +11,7 @@ all.pops = sim$all.populations
 extant.pops = subset(all.pops, extant == 1)
 phy = sim$phylo.out
 
-extant_phy = drop.tips(phy, phy$tip.label[!phy$tip.label %in% extant.pops$spp.name])
+extant_phy = drop.tip(phy, phy$tip.label[!phy$tip.label %in% extant.pops$spp.name])
 write.tree(extant_phy, 'pathname/extant_phy.tre')
 
 # Get appropriate priors (a file is written to the working directory called 'myPriors.txt')
