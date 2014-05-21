@@ -1,6 +1,6 @@
-Command line: c:\Program Files\bamm-1.0.0\bamm.exe -c sim5525_control_file.txt
-Random seed (clock): 1399657220
-Start time: Fri May 09 13:40:20 2014
+Command line: bamm -c sim5525_control_file.txt
+Random seed (clock): 1400190633
+Start time: Thu May 15 17:50:33 2014
 
 Current parameter settings:
             ExtinctionProbMax    0.999
@@ -34,7 +34,7 @@ Current parameter settings:
              muShiftRootPrior    -1.0
             numberGenerations    10000000
                       outName    
-                    overwrite    0
+                    overwrite    1
              poissonRatePrior    1.0
                     printFreq    1000
               runInfoFilename    run_info.txt
@@ -60,3 +60,5 @@ Current parameter settings:
             updateRateMuShift    0.0
  useGlobalSamplingProbability    1
    writeMeanBranchLengthTrees    0
+End time: Sat May 17 02:20:31 2014
+
