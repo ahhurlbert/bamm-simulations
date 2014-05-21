@@ -95,18 +95,18 @@ muInitRootPrior = 23.0842328709003
 ###################################
 # MCMC SIMULATION SETTINGS & OUTPUT OPTIONS
 
-numberGenerations = 10000
+numberGenerations = 10000000
 # Generations to perform MCMC simulation.
 
-mcmcWriteFreq = 1000
+mcmcWriteFreq = 5000
 # Writes MCMC simulation parameters (log-likelihood, log-prior,
 # number of processes) to file every mcmcWriteFreq generations.
 
-eventDataWriteFreq = 1000
+eventDataWriteFreq = 5000
 # Specify frequency to write actual model parameters to file. 
 # These are the main results!
 
-printFreq = 1000
+printFreq = 5000
 # Prints MCMC status to screen every printFreq generations.
 
 outName = sim3465
