@@ -25,7 +25,5 @@ bamm.plot = function(simID, tree, edata, extantPops) {
   tiplabels(pch = 15, adj = 0.52, cex = 2, col = cols[home.regions$region])
 }
 
-pdf(')
-bamm.plot(4065, tree4065, edata4065, extant.pops4065)
-mtext("Sim 4065, Energy Gradient, time = 100k")
+
 
