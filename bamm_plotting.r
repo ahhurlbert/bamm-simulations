@@ -76,9 +76,9 @@ phy4065 = sim4065$phylo.out
 phy3865 = sim3865$phylo.out
 phy5525 = sim5525$phylo.out
 
-extant.phy4065 = drop.tip(phy4065, phy4065$tip.label[!phy4065$tip.label %in% extant.pops4065$spp.name])
-extant.phy3865 = drop.tip(phy3865, phy3865$tip.label[!phy3865$tip.label %in% extant.pops3865$spp.name])
-extant.phy5525 = drop.tip(phy5525, phy5525$tip.label[!phy5525$tip.label %in% extant.pops5525$spp.name])
+extant.phy4065 = read.tree('Z:/git/bamm-simulations/sim4065/extant_phy4065.tre')
+extant.phy3865 = read.tree('Z:/git/bamm-simulations/sim3865/extant_phy3865.tre')
+extant.phy5525 = read.tree('Z:/git/bamm-simulations/sim5525/extant_phy5525.tre')
 
 edata4065 = getEventData(extant.phy4065, eventdata = "Z:/git/bamm-simulations/sim4065/sim4065_event_data.txt", burnin = burnInFrac)
 edata3865 = getEventData(extant.phy3865, eventdata = "Z:/git/bamm-simulations/sim3865/sim3865_event_data.txt", burnin = burnInFrac)
