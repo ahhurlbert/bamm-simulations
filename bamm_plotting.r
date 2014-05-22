@@ -12,7 +12,7 @@ require(BAMMtools)
 require(RColorBrewer)
 
 
-bamm.plot = function(simID, tree, edata, extantPops) {
+bamm.plot = function(tree, edata, extantPops) {
   spp = unique(extantPops$spp.name)
   extantPops$env.diff = abs(extantPops$env.opt - extantPops$reg.env)
   home.reg = c()
@@ -87,7 +87,17 @@ edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data
 #edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = burnInFrac)
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 
-
+pdf('regional_bammplots.pdf', height = 14, width = 16)
+par(mfrow = c(2,2))
+bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
+mtext("Sim 4065, Energy gradient, t = 30k", 3)
+bamm.plot(extant.phy4065, edata4065, extant.pops4065)
+mtext("Sim 4065, Energy gradient, t = 100k", 3)
+bamm.plot(extant.phy3865, edata3865, extant.pops3865)
+mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
+bamm.plot(extant.phy5525, edata5525, extant.pops5525)
+mtext("Sim 5525, Speciation gradient, t = 100k", 3)
+dev.off()
 
 
 
