@@ -6,8 +6,7 @@
 # 3) Speciation gradient, sim 5525
 # 4) Disturbance gradient, sim 3865 (need to run through 100k)
 
-source('code/supplemental_analysis_functions.r')
-source('../bamm-simulations/bamm_plotting.r')
+source('../species-energy-simulation/code/supplemental_analysis_functions.r')
 require(ape)
 require(BAMMtools)
 require(RColorBrewer)
@@ -63,28 +62,30 @@ if (0) { #this for loop not quite working yet
 sim4065 = output.unzip('Z:/SENCoutput/Hurlbert_and_Stegen_2014/raw_sim_output', 4065)
 sim3865 = output.unzip('Z:/SENCoutput/Hurlbert_and_Stegen_2014/disturb_sim_output', 3865)
 sim5525 = output.unzip('Z:/Manuscripts/FrontiersTropicalDiversity/raw_sim_output', 5525)
+sim3465 = output.unzip('Z:/SENCoutput/Hurlbert_and_Stegen_2014/raw_sim_output', 3465)
 
 all.pops4065 = sim4065$all.populations
 all.pops3865 = sim3865$all.populations
 all.pops5525 = sim5525$all.populations
+all.pops3465 = sim3465$all.populations
 
 extant.pops4065 = subset(all.pops4065, extant == 1)
 extant.pops3865 = subset(all.pops3865, extant == 1)
 extant.pops5525 = subset(all.pops5525, extant == 1)
+extant.pops3465 = subset(all.pops3465, extant == 1)
+extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
 
-phy4065 = sim4065$phylo.out
-phy3865 = sim3865$phylo.out
-phy5525 = sim5525$phylo.out
+extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
+extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
+extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
+extant.phy3465 = read.tree('sim3465/extant_phy3465.tre')
+extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
 
-extant.phy4065 = read.tree('Z:/git/bamm-simulations/sim4065/extant_phy4065.tre')
-extant.phy3865 = read.tree('Z:/git/bamm-simulations/sim3865/extant_phy3865.tre')
-extant.phy5525 = read.tree('Z:/git/bamm-simulations/sim5525/extant_phy5525.tre')
-
-edata4065 = getEventData(extant.phy4065, eventdata = "Z:/git/bamm-simulations/sim4065/sim4065_event_data.txt", burnin = burnInFrac)
-edata3865 = getEventData(extant.phy3865, eventdata = "Z:/git/bamm-simulations/sim3865/sim3865_event_data.txt", burnin = burnInFrac)
-edata5525 = getEventData(extant.phy5525, eventdata = "Z:/git/bamm-simulations/sim5525/sim5525_event_data.txt", burnin = burnInFrac)
-
-
+edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
+edata3865 = getEventData(extant.phy3865, eventdata = "sim3865/sim3865_event_data.txt", burnin = burnInFrac)
+edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
+#edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = burnInFrac)
+edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 
 
 
