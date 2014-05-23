@@ -18,7 +18,7 @@
 modeltype = speciationextinction        
 # Specify speciationextinction or trait analysis
                                   
-treefile = extant_phy3865.tre
+treefile = extant_phy5625.tre
 # Location of phylogenetic tree to be analyzed
 
 runInfoFilename = run_info.txt
@@ -78,37 +78,38 @@ overwrite = 1
 #
 # <START prior block >
 
-poissonRatePrior = 0.02
+poissonRatePrior = 1.0
 
-lambdaInitPrior = 1001.24204892841
+lambdaInitPrior = 3386.62008938087
 
-lambdaShiftPrior = 3.83994578913022e-05
+lambdaShiftPrior = 1.15160347943647e-05
 
-muInitPrior = 1001.24204892841
+muInitPrior = 3386.62008938087
 
-lambdaInitRootPrior = 5006.21024464205
+lambdaInitRootPrior = 16933.1004469044
 
-lambdaShiftRootPrior = 3.83994578913022e-05
+lambdaShiftRootPrior = 1.15160347943647e-05
 
-muInitRootPrior = 5006.21024464205# <END prior block >
+muInitRootPrior = 16933.1004469044
+# <END prior block >
 ###################################
 # MCMC SIMULATION SETTINGS & OUTPUT OPTIONS
 
 numberGenerations = 10000000
 # Generations to perform MCMC simulation.
 
-mcmcWriteFreq = 10000
+mcmcWriteFreq = 5000
 # Writes MCMC simulation parameters (log-likelihood, log-prior,
 # number of processes) to file every mcmcWriteFreq generations.
 
-eventDataWriteFreq = 10000
+eventDataWriteFreq = 5000
 # Specify frequency to write actual model parameters to file. 
 # These are the main results!
 
-printFreq = 10000
+printFreq = 1000
 # Prints MCMC status to screen every printFreq generations.
 
-# outName = BAMM
+outName = sim5625
 # Name of analysis (output files will be prefixed with this)
 # if commented out, no prefix will be used
 
