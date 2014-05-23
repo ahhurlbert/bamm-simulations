@@ -12,7 +12,7 @@ require(BAMMtools)
 require(RColorBrewer)
 
 
-bamm.plot = function(tree, edata, extantPops, colorbreaks = NULL, offset = 0.02) {
+bamm.plot = function(tree, edata, extantPops, colorbreaks = NULL, offset = 0.03) {
   spp = unique(extantPops$spp.name)
   extantPops$env.diff = abs(extantPops$env.opt - extantPops$reg.env)
   home.reg = c()
@@ -33,14 +33,12 @@ bamm.plot = function(tree, edata, extantPops, colorbreaks = NULL, offset = 0.02)
   return(xx)
 }
 
+if (0) { #this for loop not quite working yet
 sims.to.load = c(4065, 3865, 5525)
 sim.paths = c(#'Z:/SENCoutput/Hurlbert_and_Stegen_2014/raw_sim_output',
   'Z:/SENCoutput/Hurlbert_and_Stegen_2014/raw_sim_output',
   'Z:/SENCoutput/Hurlbert_and_Stegen_2014/disturb_sim_output',
   'Z:/Manuscripts/FrontiersTropicalDiversity/raw_sim_output')
-burnInFrac = 0.2
-
-if (0) { #this for loop not quite working yet
   for (i in 1:4) {
     simID = sims.to.load[i]
     tempsim = output.unzip(sim.paths[i], simID)
@@ -84,10 +82,11 @@ extant.phy3465 = read.tree('sim3465/extant_phy3465.tre')
 extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
 extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
 
+burnInFrac = 0.2
 edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
 edata3865 = getEventData(extant.phy3865, eventdata = "sim3865/sim3865_event_data.txt", burnin = burnInFrac)
 edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
-edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = burnInFrac)
+edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = 0.05)
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
 
@@ -97,20 +96,20 @@ edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim552
 pdf('bammplot_4_scenarios.pdf', height = 8, width = 10)
 par(mfrow = c(1,2))
 #Page 1
-yy = bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, offset = 0.03)
+yy = bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k)
 mtext("Sim 5525, Speciation gradient, t = 30k", 3)
-bamm.plot(extant.phy5525, edata5525, extant.pops5525, yy$colorbreaks, offset = 0.03)
+bamm.plot(extant.phy5525, edata5525, extant.pops5525, yy$colorbreaks)
 mtext("Sim 5525, Speciation gradient, t = 100k", 3)
 #Page 2
-xx = bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k, offset = 0.03)
+xx = bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
 mtext("Sim 4065, Energy gradient, t = 30k", 3)
-bamm.plot(extant.phy4065, edata4065, extant.pops4065, xx$colorbreaks, offset = 0.03)
+bamm.plot(extant.phy4065, edata4065, extant.pops4065, xx$colorbreaks)
 mtext("Sim 4065, Energy gradient, t = 100k", 3)
 #Page 3
-bamm.plot(extant.phy3865, edata3865, extant.pops3865, offset = 0.03)
+bamm.plot(extant.phy3865, edata3865, extant.pops3865)
 mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
-bamm.plot(extant.phy3465, edata3465, extant.pops3465, offset = 0.03)
-mtext("Sim 3465, Niche conservatism", 3)
+#bamm.plot(extant.phy3465, edata3465, extant.pops3465)
+#mtext("Sim 3465, Niche conservatism", 3)
 
 dev.off()
 
