@@ -107,6 +107,9 @@ bamm.plot(extant.phy3865, edata3865, extant.pops3865)
 mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
 dev.off()
 
+
+#Plotting these sims at t=30k and t=100k
+#Need to make sure they are using the same color legend for comparison
 pdf('bammplot_specn_grad.pdf', height = 8, width = 10)
 par(mfrow = c(1,2))
 yy = bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, offset = 0.03)
