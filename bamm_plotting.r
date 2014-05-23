@@ -91,39 +91,27 @@ edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
 
-pdf('regional_bammplots.pdf', height = 14, width = 16)
-par(mfrow = c(2,2))
-bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
-mtext("Sim 4065, Energy gradient, t = 30k", 3)
-bamm.plot(extant.phy4065, edata4065, extant.pops4065)
-mtext("Sim 4065, Energy gradient, t = 100k", 3)
-bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k)
-mtext("Sim 5525, Speciation gradient, t = 30k", 3)
-bamm.plot(extant.phy5525, edata5525, extant.pops5525)
-mtext("Sim 5525, Speciation gradient, t = 100k", 3)
-bamm.plot(extant.phy3465, edata3465, extant.pops3465)
-mtext("Sim 3465, Niche conservatism", 3)
-bamm.plot(extant.phy3865, edata3865, extant.pops3865)
-mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
-dev.off()
 
-
-#Plotting these sims at t=30k and t=100k
+#Plotting some of these sims at t=30k and t=100k
 #Need to make sure they are using the same color legend for comparison
-pdf('bammplot_specn_grad.pdf', height = 8, width = 10)
+pdf('bammplot_4_scenarios.pdf', height = 8, width = 10)
 par(mfrow = c(1,2))
+#Page 1
 yy = bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, offset = 0.03)
 mtext("Sim 5525, Speciation gradient, t = 30k", 3)
 bamm.plot(extant.phy5525, edata5525, extant.pops5525, yy$colorbreaks, offset = 0.03)
 mtext("Sim 5525, Speciation gradient, t = 100k", 3)
-dev.off()
-
-pdf('bammplot_energy_grad.pdf', height = 8, width = 10)
-par(mfrow = c(1,2), mar = c(2,2,4,4))
+#Page 2
 xx = bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k, offset = 0.03)
 mtext("Sim 4065, Energy gradient, t = 30k", 3)
 bamm.plot(extant.phy4065, edata4065, extant.pops4065, xx$colorbreaks, offset = 0.03)
 mtext("Sim 4065, Energy gradient, t = 100k", 3)
+#Page 3
+bamm.plot(extant.phy3865, edata3865, extant.pops3865, offset = 0.03)
+mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
+bamm.plot(extant.phy3465, edata3465, extant.pops3465, offset = 0.03)
+mtext("Sim 3465, Niche conservatism", 3)
+
 dev.off()
 
 
