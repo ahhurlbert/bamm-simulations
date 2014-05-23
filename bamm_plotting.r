@@ -287,8 +287,8 @@ mtext("Sim 4065, Energy gradient, t = 100k", 3)
 #Page 3
 bamm.plot(extant.phy3865, edata3865, extant.pops3865)
 mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
-#bamm.plot(extant.phy3465, edata3465, extant.pops3465)
-#mtext("Sim 3465, Niche conservatism", 3)
+bamm.plot(extant.phy3465, edata3465, extant.pops3465)
+mtext("Sim 3465, Niche conservatism", 3)
 
 dev.off()
 
