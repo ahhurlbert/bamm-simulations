@@ -74,19 +74,21 @@ extant.pops3865 = subset(all.pops3865, extant == 1)
 extant.pops5525 = subset(all.pops5525, extant == 1)
 extant.pops3465 = subset(all.pops3465, extant == 1)
 extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
+extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
 
 extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
 extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
 extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
 extant.phy3465 = read.tree('sim3465/extant_phy3465.tre')
 extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
+extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
 
 edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
 edata3865 = getEventData(extant.phy3865, eventdata = "sim3865/sim3865_event_data.txt", burnin = burnInFrac)
 edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
-#edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = burnInFrac)
+edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = burnInFrac)
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
-
+edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
 pdf('regional_bammplots.pdf', height = 14, width = 16)
 par(mfrow = c(2,2))
 bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
@@ -97,7 +99,7 @@ bamm.plot(extant.phy3865, edata3865, extant.pops3865)
 mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
 bamm.plot(extant.phy5525, edata5525, extant.pops5525)
 mtext("Sim 5525, Speciation gradient, t = 100k", 3)
+bamm.plot(extant.phy3465, edata3465, extant.pops3465)
 dev.off()
-
 
 
