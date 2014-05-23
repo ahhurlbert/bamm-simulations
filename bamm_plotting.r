@@ -58,10 +58,10 @@ sim.paths = c(#'Z:/SENCoutput/Hurlbert_and_Stegen_2014/raw_sim_output',
 } # end if
 
 
-sim4065 = output.unzip('..species-energy-simulation/raw_sim_output', 4065)
-sim3865 = output.unzip('..species-energy-simulation/raw_sim_output', 3865)
-sim5525 = output.unzip('..species-energy-simulation/raw_sim_output', 5525)
-sim3465 = output.unzip('..species-energy-simulation/raw_sim_output', 3465)
+sim4065 = output.unzip('../species-energy-simulation/raw_sim_output', 4065)
+sim3865 = output.unzip('../species-energy-simulation/raw_sim_output', 3865)
+sim5525 = output.unzip('../species-energy-simulation/raw_sim_output', 5525)
+sim3465 = output.unzip('../species-energy-simulation/raw_sim_output', 3465)
 
 all.pops4065 = sim4065$all.populations
 all.pops3865 = sim3865$all.populations
