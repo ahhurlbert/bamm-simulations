@@ -12,7 +12,7 @@ require(BAMMtools)
 require(RColorBrewer)
 
 
-bamm.plot = function(tree, edata, extantPops) {
+bamm.plot = function(tree, edata, extantPops, colorbreaks = NULL, offset = 0.02) {
   spp = unique(extantPops$spp.name)
   extantPops$env.diff = abs(extantPops$env.opt - extantPops$reg.env)
   home.reg = c()
@@ -27,9 +27,10 @@ bamm.plot = function(tree, edata, extantPops) {
   tips = data.frame(spp.name = as.character(tree$tip.label))
   home.regions = merge(tips, home.reg, by = 'spp.name', sort = F)
   
-  plot.bammdata(edata, lwd=1)  
+  xx = plot.bammdata(edata, lwd=1, colorbreaks = colorbreaks)  
   cols = colorRampPalette(c('violet', 'white','darkgreen'))(10)
-  tiplabels(pch = 15, adj = 0.52, cex = 2, col = cols[home.regions$region])
+  tiplabels(pch = 15, adj = (0.5 + offset), cex = 2, col = cols[home.regions$region])
+  return(xx)
 }
 
 sims.to.load = c(4065, 3865, 5525)
@@ -89,17 +90,37 @@ edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data
 edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = burnInFrac)
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
+
 pdf('regional_bammplots.pdf', height = 14, width = 16)
 par(mfrow = c(2,2))
 bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
 mtext("Sim 4065, Energy gradient, t = 30k", 3)
 bamm.plot(extant.phy4065, edata4065, extant.pops4065)
 mtext("Sim 4065, Energy gradient, t = 100k", 3)
-bamm.plot(extant.phy3865, edata3865, extant.pops3865)
-mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
+bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k)
+mtext("Sim 5525, Speciation gradient, t = 30k", 3)
 bamm.plot(extant.phy5525, edata5525, extant.pops5525)
 mtext("Sim 5525, Speciation gradient, t = 100k", 3)
 bamm.plot(extant.phy3465, edata3465, extant.pops3465)
+mtext("Sim 3465, Niche conservatism", 3)
+bamm.plot(extant.phy3865, edata3865, extant.pops3865)
+mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
+dev.off()
+
+pdf('bammplot_specn_grad.pdf', height = 8, width = 10)
+par(mfrow = c(1,2))
+yy = bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, offset = 0.03)
+mtext("Sim 5525, Speciation gradient, t = 30k", 3)
+bamm.plot(extant.phy5525, edata5525, extant.pops5525, yy$colorbreaks, offset = 0.03)
+mtext("Sim 5525, Speciation gradient, t = 100k", 3)
+dev.off()
+
+pdf('bammplot_energy_grad.pdf', height = 8, width = 10)
+par(mfrow = c(1,2), mar = c(2,2,4,4))
+xx = bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k, offset = 0.03)
+mtext("Sim 4065, Energy gradient, t = 30k", 3)
+bamm.plot(extant.phy4065, edata4065, extant.pops4065, xx$colorbreaks, offset = 0.03)
+mtext("Sim 4065, Energy gradient, t = 100k", 3)
 dev.off()
 
 
