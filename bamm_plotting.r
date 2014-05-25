@@ -299,3 +299,33 @@ mtext("Sim 3465, Niche conservatism", 3)
 dev.off()
 
 
+####################################################
+# Plotting tip-specific speciation rates versus region
+
+plot.regLambda = function(simID, edata, extant.pops, fitline = NULL) {
+  specnRates = data.frame(spp.name = edata$tip.label, Lambda = edata$meanTipLambda)
+  extantRates = merge(extant.pops, specnRates, by = 'spp.name', all.x = T)
+  regRates = aggregate(extantRates$Lambda, by = list(extantRates$region), mean)
+  plot(extantRates$region, extantRates$Lambda, xlab = '', ylab = '', xaxt = 'n')
+  if (fitline == "spline") {
+    points(smooth.spline(extantRates$region, extantRates$Lambda, df = 4),type='l',col='red')
+  } else if (fitline == "linear") {
+    abline(lm(extantRates$Lambda ~ extantRates$region), col = 'red')
+  }
+  mtext("Temperate", 1, adj = 0, cex = .75)
+  mtext("Tropical", 1, adj = 1, cex = .75)
+}
+
+pdf('specnRate_vs_latitude_4scenarios.pdf', height = 8, width = 10)
+par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
+plot.regLambda(3465, edata3465, extant.pops3465, "spline")
+mtext("Niche conservatism", 3, line = 1)
+plot.regLambda(4065, edata4065, extant.pops4065, "spline")
+mtext("Energy gradient", 3, line = 1)
+plot.regLambda(5525, edata5525, extant.pops5525, "spline")
+mtext("Speciation gradient", 3, line = 1)
+plot.regLambda(5625, edata5625, extant.pops5625, "spline")
+mtext("Disturbance gradient", 3, line = 1)
+mtext("Region", 1, outer=T, cex = 1.5)
+mtext("Speciation rate", 2, outer=T, cex = 1.5)
+dev.off()
