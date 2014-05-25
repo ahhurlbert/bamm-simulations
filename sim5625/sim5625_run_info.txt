@@ -1,0 +1,64 @@
+Command line: bamm -c sim5625_control_file.txt
+Random seed (clock): 1400874367
+Start time: Fri May 23 15:46:07 2014
+
+Current parameter settings:
+            ExtinctionProbMax    0.999
+                     autotune    0
+         branchRatesWriteFreq    0
+              eventDataInfile    event_data_in.txt
+             eventDataOutfile    sim5625_event_data.txt
+           eventDataWriteFreq    5000
+       globalSamplingFraction    1.0
+          initialNumberEvents    0
+              initializeModel    1
+                  lambdaInit0    0.032
+              lambdaInitPrior    3386.62008938087
+          lambdaInitRootPrior    16933.1004469044
+                lambdaOutfile    sim5625_lambda_rates.txt
+                 lambdaShift0    0
+             lambdaShiftPrior    1.15160347943647e-05
+         lambdaShiftRootPrior    1.15160347943647e-05
+                loadEventData    0
+         localGlobalMoveRatio    10.0
+                  mcmcOutfile    sim5625_mcmc_out.txt
+                mcmcWriteFreq    5000
+         minCladeSizeForShift    1
+                    modeltype    speciationextinction
+                      muInit0    .005
+                  muInitPrior    3386.62008938087
+              muInitRootPrior    16933.1004469044
+                    muOutfile    sim5625_mu_rates.txt
+                     muShift0    0.0
+                 muShiftPrior    1.0
+             muShiftRootPrior    -1.0
+            numberGenerations    10000000
+                      outName    sim5625
+                    overwrite    1
+             poissonRatePrior    1.0
+                    printFreq    1000
+              runInfoFilename    sim5625_run_info.txt
+                      runMCMC    1
+          sampleFromPriorOnly    0
+          sampleProbsFilename    sample_probs.txt
+                         seed    -1
+                    segLength    0.02
+          simulatePriorShifts    1
+                     treefile    extant_phy5625.tre
+     updateEventLocationScale    0.05
+         updateEventRateScale    4.0
+        updateLambdaInitScale    2.0
+       updateLambdaShiftScale    0.1
+            updateMuInitScale    2.0
+           updateMuShiftScale    0.0
+        updateRateEventNumber    0.1
+      updateRateEventPosition    1
+          updateRateEventRate    1
+            updateRateLambda0    1
+        updateRateLambdaShift    1
+                updateRateMu0    1
+            updateRateMuShift    0.0
+ useGlobalSamplingProbability    1
+   writeMeanBranchLengthTrees    0
+End time: Sat May 24 01:23:29 2014
+
