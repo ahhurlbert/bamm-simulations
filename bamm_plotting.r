@@ -316,7 +316,8 @@ plot.regLambda = function(simID, edata, extant.pops, fitline = NULL) {
   mtext("Tropical", 1, adj = 1, cex = .75)
 }
 
-pdf('specnRate_vs_latitude_4scenarios.pdf', height = 8, width = 10)
+# t = 100k
+pdf('specnRate_vs_latitude_4scenarios_100k.pdf', height = 8, width = 10)
 par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
 plot.regLambda(3465, edata3465, extant.pops3465, "spline")
 mtext("Niche conservatism", 3, line = 1)
@@ -329,3 +330,19 @@ mtext("Disturbance gradient", 3, line = 1)
 mtext("Region", 1, outer=T, cex = 1.5)
 mtext("Speciation rate", 2, outer=T, cex = 1.5)
 dev.off()
+
+# t = 30k
+pdf('specnRate_vs_latitude_4scenarios_30k.pdf', height = 8, width = 10)
+par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
+plot.regLambda(3465, edata3465, extant.pops3465, "spline")
+mtext("Niche conservatism", 3, line = 1)
+plot.regLambda(4065, edata4065.30k, extant.pops4065.30k, "spline")
+mtext("Energy gradient", 3, line = 1)
+plot.regLambda(5525, edata5525.30k, extant.pops5525.30k, "spline")
+mtext("Speciation gradient", 3, line = 1)
+plot.regLambda(5625, edata3865, extant.pops3865, "spline")
+mtext("Disturbance gradient", 3, line = 1)
+mtext("Region", 1, outer=T, cex = 1.5)
+mtext("Speciation rate", 2, outer=T, cex = 1.5)
+dev.off()
+
