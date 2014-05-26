@@ -241,6 +241,7 @@ sim4065 = output.unzip('../species-energy-simulation/raw_sim_output', 4065)
 sim3865 = output.unzip('../species-energy-simulation/raw_sim_output', 3865)
 sim5525 = output.unzip('../species-energy-simulation/raw_sim_output', 5525)
 sim3465 = output.unzip('../species-energy-simulation/raw_sim_output', 3465)
+sim5625 = output.unzip('../species-energy-simulation/raw_sim_output', 5625)
 
 all.pops4065 = sim4065$all.populations
 all.pops3865 = sim3865$all.populations
@@ -255,6 +256,7 @@ extant.pops3465 = subset(all.pops3465, extant == 1)
 extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.pops5625 = subset(all.pops5625, extant == 1)
+extant.pops5625.30k = subset(all.pops5625, time.of.origin <= 30000 & time.of.extinction > 30000)
 
 extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
 extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
@@ -263,6 +265,7 @@ extant.phy3465 = read.tree('sim3465/extant_phy3465.tre')
 extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
 extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
 extant.phy5625 = read.tree('sim5625/extant_phy5625.tre')
+extant.phy5625.30k = read.tree('sim5625-30k/extant_phy5625_30k.tre')
 
 burnInFrac = 0.2
 edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
@@ -272,6 +275,7 @@ edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
 edata5625 = getEventData(extant.phy5625, eventdata = "sim5625/sim5625_event_data.txt", burnin = burnInFrac)
+edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/sim5625_30k_event_data.txt", burnin = burnInFrac)
 
 #Plotting some of these sims at t=30k and t=100k
 #Need to make sure they are using the same color legend for comparison
