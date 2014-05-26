@@ -246,6 +246,7 @@ all.pops4065 = sim4065$all.populations
 all.pops3865 = sim3865$all.populations
 all.pops5525 = sim5525$all.populations
 all.pops3465 = sim3465$all.populations
+all.pops5625 = sim5625$all.populations
 
 extant.pops4065 = subset(all.pops4065, extant == 1)
 extant.pops3865 = subset(all.pops3865, extant == 1)
@@ -253,6 +254,7 @@ extant.pops5525 = subset(all.pops5525, extant == 1)
 extant.pops3465 = subset(all.pops3465, extant == 1)
 extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
+extant.pops5625 = subset(all.pops5625, extant == 1)
 
 extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
 extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
@@ -260,6 +262,7 @@ extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
 extant.phy3465 = read.tree('sim3465/extant_phy3465.tre')
 extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
 extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
+extant.phy5625 = read.tree('sim5625/extant_phy5625.tre')
 
 burnInFrac = 0.2
 edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
@@ -268,7 +271,7 @@ edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data
 edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = 0.05)
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
-
+edata5625 = getEventData(extant.phy5625, eventdata = "sim5625/sim5625_event_data.txt", burnin = burnInFrac)
 
 #Plotting some of these sims at t=30k and t=100k
 #Need to make sure they are using the same color legend for comparison
@@ -287,9 +290,61 @@ mtext("Sim 4065, Energy gradient, t = 100k", 3)
 #Page 3
 bamm.plot(extant.phy3865, edata3865, extant.pops3865)
 mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
+bamm.plot(extant.phy5625, edata5625, extant.pops5625)
+mtext("Sim 5625, Disturbance gradient, t = 100k", 3)
+#Page 4
 bamm.plot(extant.phy3465, edata3465, extant.pops3465)
 mtext("Sim 3465, Niche conservatism", 3)
 
 dev.off()
 
+
+####################################################
+# Plotting tip-specific speciation rates versus region
+
+plot.regLambda = function(simID, edata, extant.pops, fitline = NULL) {
+  specnRates = data.frame(spp.name = edata$tip.label, Lambda = edata$meanTipLambda)
+  extantRates = merge(extant.pops, specnRates, by = 'spp.name', all.x = T)
+  regRates = aggregate(extantRates$Lambda, by = list(extantRates$region), function(x) mean(x, na.rm=T))
+  plot(extantRates$region, extantRates$Lambda, xlab = '', ylab = '', xaxt = 'n')
+  if (fitline == "spline") {
+    points(smooth.spline(extantRates$region[is.na(extantRates$Lambda)==F], extantRates$Lambda[is.na(extantRates$Lambda)==F], df = 4),type='l',col='red')
+  } else if (fitline == "linear") {
+    abline(lm(extantRates$Lambda ~ extantRates$region), col = 'red')
+  }
+  mtext("Temperate", 1, adj = 0, cex = .75)
+  mtext("Tropical", 1, adj = 1, cex = .75)
+}
+
+# t = 100k
+pdf('specnRate_vs_latitude_4scenarios_100k.pdf', height = 8, width = 10)
+par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
+plot.regLambda(3465, edata3465, extant.pops3465, "spline")
+mtext("Niche conservatism", 3, line = 1)
+plot.regLambda(4065, edata4065, extant.pops4065, "spline")
+mtext("Energy gradient", 3, line = 1)
+plot.regLambda(5525, edata5525, extant.pops5525, "spline")
+mtext("Speciation gradient", 3, line = 1)
+plot.regLambda(5625, edata5625, extant.pops5625, "spline")
+mtext("Disturbance gradient", 3, line = 1)
+mtext("Region", 1, outer=T, cex = 1.5)
+mtext("Speciation rate", 2, outer=T, cex = 1.5)
+mtext("t = 100000", 1, outer = T, at = .9, line = 3)
+dev.off()
+
+# t = 30k
+pdf('specnRate_vs_latitude_4scenarios_30k.pdf', height = 8, width = 10)
+par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
+plot.regLambda(3465, edata3465, extant.pops3465, "spline")
+mtext("Niche conservatism", 3, line = 1)
+plot.regLambda(4065, edata4065.30k, extant.pops4065.30k, "spline")
+mtext("Energy gradient", 3, line = 1)
+plot.regLambda(5525, edata5525.30k, extant.pops5525.30k, "spline")
+mtext("Speciation gradient", 3, line = 1)
+plot.regLambda(5625, edata3865, extant.pops3865, "spline")
+mtext("Disturbance gradient", 3, line = 1)
+mtext("Region", 1, outer=T, cex = 1.5)
+mtext("Speciation rate", 2, outer=T, cex = 1.5)
+mtext("t = 30000", 1, outer = T, at = .9, line = 3)
+dev.off()
 
