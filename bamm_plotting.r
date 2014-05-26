@@ -305,10 +305,10 @@ dev.off()
 plot.regLambda = function(simID, edata, extant.pops, fitline = NULL) {
   specnRates = data.frame(spp.name = edata$tip.label, Lambda = edata$meanTipLambda)
   extantRates = merge(extant.pops, specnRates, by = 'spp.name', all.x = T)
-  regRates = aggregate(extantRates$Lambda, by = list(extantRates$region), mean)
+  regRates = aggregate(extantRates$Lambda, by = list(extantRates$region), function(x) mean(x, na.rm=T))
   plot(extantRates$region, extantRates$Lambda, xlab = '', ylab = '', xaxt = 'n')
   if (fitline == "spline") {
-    points(smooth.spline(extantRates$region, extantRates$Lambda, df = 4),type='l',col='red')
+    points(smooth.spline(extantRates$region[is.na(extantRates$Lambda)==F], extantRates$Lambda[is.na(extantRates$Lambda)==F], df = 4),type='l',col='red')
   } else if (fitline == "linear") {
     abline(lm(extantRates$Lambda ~ extantRates$region), col = 'red')
   }
@@ -329,6 +329,7 @@ plot.regLambda(5625, edata5625, extant.pops5625, "spline")
 mtext("Disturbance gradient", 3, line = 1)
 mtext("Region", 1, outer=T, cex = 1.5)
 mtext("Speciation rate", 2, outer=T, cex = 1.5)
+mtext("t = 100000", 1, outer = T, at = .9, line = 3)
 dev.off()
 
 # t = 30k
@@ -344,5 +345,6 @@ plot.regLambda(5625, edata3865, extant.pops3865, "spline")
 mtext("Disturbance gradient", 3, line = 1)
 mtext("Region", 1, outer=T, cex = 1.5)
 mtext("Speciation rate", 2, outer=T, cex = 1.5)
+mtext("t = 30000", 1, outer = T, at = .9, line = 3)
 dev.off()
 
