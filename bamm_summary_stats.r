@@ -5,6 +5,7 @@
 bamm_summary = function(mcmcout, phylo, simID, burnin = 0.2) {
   require(BAMMtools)
   edata = getEventData(phylo, eventdata = paste('sim', simID, '/sim', simID, '_event_data.txt', sep = ''), burnin = burnin)
+  rtt = plotRateThroughTime(edata, plot = F)
   
   generations = max(mcmcout$generation) - 1
   writeFreq = mcmcout$generation[2] - mcmcout$generation[1]
@@ -16,7 +17,7 @@ bamm_summary = function(mcmcout, phylo, simID, burnin = 0.2) {
   modal_Nshift = as.numeric(names(which(post_probs == max(post_probs))))
   p_Nshift = max(post_probs)
   meanTipLambda = mean(edata$meanTipLambda)
-  Lambda_max_over_min = max(edata$meanTipLambda)/min(edata$meanTipLambda)
+  Lambda_max_over_min = max(rtt$avg)/min(rtt$avg)
   
   output = data.frame(cbind(generations, writeFreq, burnin, effSize_Nshift, effSize_logLik,
                             modal_Nshift, p_Nshift, meanTipLambda, Lambda_max_over_min))
