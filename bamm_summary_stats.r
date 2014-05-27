@@ -1,11 +1,17 @@
+# Function for grabbing summary stats regarding BAMM analyses based on the
+# BAMM output in the specified folder
 
-#NOTE: this function doesn't currently work for sims like 4065.30k because of difference between 
-# directory name and file names
-
-bamm_summary = function(mcmcout, phylo, simID, burnin = 0.2) {
+bamm_summary = function(simdir, burnin = 0.2) {
   require(BAMMtools)
   require(coda)
-  edata = getEventData(phylo, eventdata = paste('sim', simID, '/sim', simID, '_event_data.txt', sep = ''), burnin = burnin)
+  phyfile = list.files(simdir)[grep('phy', list.files(simdir))]
+  phylo = read.tree(paste(simdir, '/', phyfile, sep = ''))
+  mcfiles = list.files(simdir)[grep('mcmc_out', list.files(simdir))]
+  mcmcout = read.csv(paste(simdir, '/', mcfiles[grep('^sim', mcfiles)], sep = ''))
+  eventfile = list.files(simdir)[grep('event', list.files(simdir))]
+
+  edata = getEventData(phylo, eventdata = paste(simdir, '/', eventfile, sep = ''), 
+                       burnin = burnin)
   rtt = plotRateThroughTime(edata, plot = F)
   
   generations = max(mcmcout$generation) - 1
@@ -22,6 +28,24 @@ bamm_summary = function(mcmcout, phylo, simID, burnin = 0.2) {
   
   output = data.frame(cbind(generations, writeFreq, burnin, effSize_Nshift, effSize_logLik,
                             modal_Nshift, p_Nshift, meanTipLambda, Lambda_max_over_min))
+  rm(list = c('edata', 'mcmcout'))
   return(output)
-  
 }
+
+simdirs = c('sim3465', 
+            'sim4065-30k', 
+            'sim5525-30k', 
+            'sim4065', 
+            'sim3865', 
+            'sim5525', 
+            'sim5625', 
+            'sim5625-30k')
+
+
+summary.out = c()
+for (s in simdirs) {
+  tmp = bamm_summary(s)
+  summary.out = rbind(summary.out, tmp)
+}
+summary = data.frame(summary.out)
+
