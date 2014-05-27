@@ -4,6 +4,7 @@
 
 bamm_summary = function(mcmcout, phylo, simID, burnin = 0.2) {
   require(BAMMtools)
+  require(coda)
   edata = getEventData(phylo, eventdata = paste('sim', simID, '/sim', simID, '_event_data.txt', sep = ''), burnin = burnin)
   rtt = plotRateThroughTime(edata, plot = F)
   
