@@ -1,7 +1,7 @@
 # Function for grabbing summary stats regarding BAMM analyses based on the
 # BAMM output in the specified folder
 
-bamm_summary = function(simdir, burnin = 0.2) {
+bamm_summary = function(simdir, edata = NULL, burnin = 0.2) {
   require(BAMMtools)
   require(coda)
   phyfile = list.files(simdir)[grep('phy', list.files(simdir))]
@@ -10,9 +10,11 @@ bamm_summary = function(simdir, burnin = 0.2) {
   mcmcout = read.csv(paste(simdir, '/', mcfiles[grep('^sim', mcfiles)], sep = ''))
   eventfile = list.files(simdir)[grep('event', list.files(simdir))]
 
-  edata = getEventData(phylo, eventdata = paste(simdir, '/', eventfile, sep = ''), 
-                       burnin = burnin)
-  rtt = plotRateThroughTime(edata, plot = F)
+  if (is.null(edata)) {
+    edata = getEventData(phylo, eventdata = paste(simdir, '/', eventfile, sep = ''), 
+                         burnin = burnin)
+  }
+    rtt = plotRateThroughTime(edata, plot = F)
   
   generations = max(mcmcout$generation) - 1
   writeFreq = mcmcout$generation[2] - mcmcout$generation[1]
@@ -25,9 +27,10 @@ bamm_summary = function(simdir, burnin = 0.2) {
   p_Nshift = max(post_probs)
   meanTipLambda = mean(edata$meanTipLambda)
   Lambda_max_over_min = max(rtt$avg)/min(rtt$avg)
+  finalLogLik = mean(mcmcout$logLik[(nrow(mcmcout)-1000):nrow(mcmcout)])
   
   output = data.frame(cbind(generations, writeFreq, burnin, effSize_Nshift, effSize_logLik,
-                            modal_Nshift, p_Nshift, meanTipLambda, Lambda_max_over_min))
+                            modal_Nshift, p_Nshift, meanTipLambda, Lambda_max_over_min, finalLogLik))
   rm(list = c('edata', 'mcmcout'))
   return(output)
 }
@@ -45,6 +48,7 @@ simdirs = c('sim3465',
 summary.out = c()
 for (s in simdirs) {
   tmp = bamm_summary(s)
+  tmp$simID = s
   summary.out = rbind(summary.out, tmp)
 }
 summary = data.frame(summary.out)
