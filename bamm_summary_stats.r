@@ -20,14 +20,14 @@ bamm_summary = function(simdir, edata = NULL, burnin = 0.2) {
   writeFreq = mcmcout$generation[2] - mcmcout$generation[1]
   burnstart <- floor(burnin * nrow(mcmcout)) #burn in 
   postburn <- mcmcout[burnstart:nrow(mcmcout), ]
-  effSize_Nshift = effectiveSize(postburn$N_shifts)
-  effSize_logLik = effectiveSize(postburn$logLik)
+  effSize_Nshift = round(effectiveSize(postburn$N_shifts), 3)
+  effSize_logLik = round(effectiveSize(postburn$logLik), 3)
   post_probs <- table(postburn$N_shifts) / nrow(postburn)
   modal_Nshift = as.numeric(names(which(post_probs == max(post_probs))))
-  p_Nshift = max(post_probs)
-  meanTipLambda = mean(edata$meanTipLambda)
-  Lambda_max_over_min = max(rtt$avg)/min(rtt$avg)
-  finalLogLik = mean(mcmcout$logLik[(nrow(mcmcout)-10):nrow(mcmcout)])
+  p_Nshift = round(max(post_probs), 3)
+  meanTipLambda = round(mean(edata$meanTipLambda), 5)
+  Lambda_max_over_min = round(max(rtt$avg)/min(rtt$avg), 2)
+  finalLogLik = round(mean(mcmcout$logLik[(nrow(mcmcout)-10):nrow(mcmcout)]), 0)
   
   output = data.frame(cbind(simdir, generations, writeFreq, burnin, effSize_Nshift, effSize_logLik,
                             modal_Nshift, p_Nshift, meanTipLambda, Lambda_max_over_min, finalLogLik))
@@ -48,7 +48,6 @@ simdirs = c('sim3465',
 summary.out = c()
 for (s in simdirs) {
   tmp = bamm_summary(s)
-  tmp$simID = s
   summary.out = rbind(summary.out, tmp)
 }
 summary = data.frame(summary.out)
