@@ -29,7 +29,7 @@ bamm_summary = function(simdir, edata = NULL, burnin = 0.2) {
   Lambda_max_over_min = max(rtt$avg)/min(rtt$avg)
   finalLogLik = mean(mcmcout$logLik[(nrow(mcmcout)-10):nrow(mcmcout)])
   
-  output = data.frame(cbind(generations, writeFreq, burnin, effSize_Nshift, effSize_logLik,
+  output = data.frame(cbind(simdir, generations, writeFreq, burnin, effSize_Nshift, effSize_logLik,
                             modal_Nshift, p_Nshift, meanTipLambda, Lambda_max_over_min, finalLogLik))
   rm(list = c('edata', 'mcmcout'))
   return(output)

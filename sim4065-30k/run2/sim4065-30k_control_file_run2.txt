@@ -98,7 +98,7 @@ muInitRootPrior = 4288.0169458374
 ###################################
 # MCMC SIMULATION SETTINGS & OUTPUT OPTIONS
 
-numberGenerations = 20000000
+numberGenerations = 5000000
 # Generations to perform MCMC simulation.
 
 mcmcWriteFreq = 5000
@@ -112,7 +112,7 @@ eventDataWriteFreq = 5000
 printFreq = 5000
 # Prints MCMC status to screen every printFreq generations.
 
-outName = sim4065_30k_run2
+outName = sim4065_30k.run2
 # Name of analysis (output files will be prefixed with this)
 # if commented out, no prefix will be used
 
