@@ -236,46 +236,85 @@ sim.paths = c(#'Z:/SENCoutput/Hurlbert_and_Stegen_2014/raw_sim_output',
   }
 } # end if
 
+burnInFrac = 0.2
 
 sim4065 = output.unzip('../species-energy-simulation/raw_sim_output', 4065)
-sim3865 = output.unzip('../species-energy-simulation/raw_sim_output', 3865)
-sim5525 = output.unzip('../species-energy-simulation/raw_sim_output', 5525)
-sim3465 = output.unzip('../species-energy-simulation/raw_sim_output', 3465)
-sim5625 = output.unzip('../species-energy-simulation/raw_sim_output', 5625)
-
 all.pops4065 = sim4065$all.populations
-all.pops3865 = sim3865$all.populations
-all.pops5525 = sim5525$all.populations
-all.pops3465 = sim3465$all.populations
-all.pops5625 = sim5625$all.populations
-
-extant.pops4065 = subset(all.pops4065, extant == 1)
-extant.pops3865 = subset(all.pops3865, extant == 1)
-extant.pops5525 = subset(all.pops5525, extant == 1)
-extant.pops3465 = subset(all.pops3465, extant == 1)
+#extant.pops4065 = subset(all.pops4065, extant == 1)
+#extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
+#edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
 extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
-extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
-extant.pops5625 = subset(all.pops5625, extant == 1)
-extant.pops5625.30k = subset(all.pops5625, time.of.origin <= 30000 & time.of.extinction > 30000)
-
-extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
-extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
-extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
-extant.phy3465 = read.tree('sim3465/extant_phy3465.tre')
 extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
-extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
-extant.phy5625 = read.tree('sim5625/extant_phy5625.tre')
-extant.phy5625.30k = read.tree('sim5625-30k/extant_phy5625_30k.tre')
+edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run3/sim4065_30k.run3_event_data.txt", burnin = burnInFrac)
 
-burnInFrac = 0.2
-edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
-edata3865 = getEventData(extant.phy3865, eventdata = "sim3865/sim3865_event_data.txt", burnin = burnInFrac)
-edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
-edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/sim3465_event_data.txt", burnin = 0.05)
-edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/sim4065_30k_event_data.txt", burnin = burnInFrac)
+sim3465 = output.unzip('../species-energy-simulation/raw_sim_output', 3465)
+all.pops3465 = sim3465$all.populations
+extant.pops3465 = subset(all.pops3465, extant == 1)
+extant.phy3465 = read.tree('sim3465/run1/extant_phy3465.tre')
+edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/run1/sim3465_event_data.txt", burnin = 0.05)
+
+#sim3865 = output.unzip('../species-energy-simulation/raw_sim_output', 3865)
+#all.pops3865 = sim3865$all.populations
+#extant.pops3865 = subset(all.pops3865, extant == 1)
+#extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
+#edata3865 = getEventData(extant.phy3865, eventdata = "sim3865/sim3865_event_data.txt", burnin = burnInFrac)
+
+sim5525 = output.unzip('../species-energy-simulation/raw_sim_output', 5525)
+all.pops5525 = sim5525$all.populations
+#extant.pops5525 = subset(all.pops5525, extant == 1)
+#extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
+#edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
+extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
+extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
-edata5625 = getEventData(extant.phy5625, eventdata = "sim5625/sim5625_event_data.txt", burnin = burnInFrac)
-edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/sim5625_30k_event_data.txt", burnin = burnInFrac)
+
+sim5625 = output.unzip('../species-energy-simulation/raw_sim_output', 5625)
+all.pops5625 = sim5625$all.populations
+#extant.pops5625 = subset(all.pops5625, extant == 1)
+#extant.phy5625 = read.tree('sim5625/extant_phy5625.tre')
+#edata5625 = getEventData(extant.phy5625, eventdata = "sim5625/sim5625_event_data.txt", burnin = burnInFrac)
+extant.pops5625.30k = subset(all.pops5625, time.of.origin <= 30000 & time.of.extinction > 30000)
+extant.phy5625.30k = read.tree('sim5625-30k/run2/extant_phy5625_30k.tre')
+edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/run2/sim5625_30k.run2_event_data.txt", burnin = burnInFrac)
+
+# Use color legend of sim4065-30k for all plots
+xx = plot.bammdata(edata4065.30k, show=F)
+
+# Sims at t=30000, paired with rate through time plots
+pdf('z:/manuscripts/frontierstropicaldiversity/bamm/rate_phylo_plot_4scenarios.pdf',
+    height = 10, width = 14)
+layout(matrix(c(rep(1:4, times = 4), 5:8), ncol=4, byrow=T))
+#par(mfrow = c(1, 4))
+
+bamm.plot(extant.phy3465, edata3465, extant.pops3465, colorbreaks = xx$colorbreaks)
+
+bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
+
+bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, colorbreaks = xx$colorbreaks)
+
+bamm.plot(extant.phy5625.30k, edata5625.30k, extant.pops5625.30k, colorbreaks = xx$colorbreaks)
+
+plotRateThroughTime(edata3465, axis.labels = F, yticks = 4)
+
+plotRateThroughTime(edata4065.30k, axis.labels = F, yticks = 4)
+
+plotRateThroughTime(edata5525.30k, axis.labels = F, yticks = 4)
+
+plotRateThroughTime(edata5625.30k, axis.labels = F, yticks = 4)
+
+mtext("Time before present", 1, outer=T)
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Plotting some of these sims at t=30k and t=100k
 #Need to make sure they are using the same color legend for comparison
