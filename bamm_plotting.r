@@ -38,9 +38,11 @@ assignColorBreaks2 = function (rates, NCOLORS = 64, spex = "s")
 }
 
 # And now plot.bammdata2 simply calls assignColorBreaks2 instead of assignColorBreaks
+# I've also added a lab.col argument to specify tip label color
+# (I make it white to create marginal white space, what a hack)
 plot.bammdata2 = function (x, method = "phylogram", vtheta = 5, rbf = 0.001, show = TRUE, 
                            labels = FALSE, legend = FALSE, spex = "s", lwd = 1, cex = 1, 
-                           pal = "RdYlBu", colorbreaks = NULL, par.reset = TRUE, ...) 
+                           pal = "RdYlBu", colorbreaks = NULL, par.reset = TRUE, lab.col = 'black', ...) 
 {
   if ("bammdata" %in% class(x)) {
     if (attributes(x)$order != "cladewise") {
@@ -143,7 +145,8 @@ plot.bammdata2 = function (x, method = "phylogram", vtheta = 5, rbf = 0.001, sho
           text(ret$segs[-1, ][phy$edge[, 2] == k, 3], 
                ret$segs[-1, ][phy$edge[, 2] == k, 4], phy$tip.label[k], 
                cex = cex, srt = (180/pi) * ret$arcs[-1, 
-                                                    ][phy$edge[, 2] == k, 1], adj = c(0, NA))
+                                                    ][phy$edge[, 2] == k, 1], adj = c(0, NA),
+               col = lab.col)
         }
       }
     }
@@ -160,7 +163,8 @@ plot.bammdata2 = function (x, method = "phylogram", vtheta = 5, rbf = 0.001, sho
       if (labels) {
         text(ret$segs[-1, ][phy$edge[, 2] <= phy$Nnode + 
                               1, 3], ret$segs[-1, ][phy$edge[, 2] <= phy$Nnode + 
-                                                      1, 4], phy$tip.label, cex = cex, pos = 4, offset = 0.25)
+                                                      1, 4], phy$tip.label, cex = cex, pos = 4, offset = 0.25,
+             col = lab.col)
       }
     }
     if (legend) {
@@ -206,8 +210,8 @@ bamm.plot = function(tree, edata, extantPops, colorbreaks = NULL, offset = 0.03)
   home.regions = merge(tips, home.reg, by = 'spp.name', sort = F)
   
   #Switch back to plot.bammdata if the quantile(na.rm = TRUE) gets fixed in source
-  xx = plot.bammdata2(edata, lwd=1, colorbreaks = colorbreaks)  
-  cols = colorRampPalette(c('deeppink', 'white','springgreen'))(10)
+  xx = plot.bammdata2(edata, lwd=1, colorbreaks = colorbreaks, labels = T, lab.col = 'white')  
+  cols = colorRampPalette(c('purple', 'white','springgreen'))(10)
   tiplabels(pch = 15, adj = (0.5 + offset), cex = 3, col = cols[home.regions$region])
   return(xx)
 }
@@ -281,28 +285,34 @@ edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/run2/s
 xx = plot.bammdata(edata4065.30k, show=F)
 
 # Sims at t=30000, paired with rate through time plots
-pdf('rate_phylo_plot_4scenarios.pdf',
+pdf(paste('rate_phylo_plot_4scenarios_', Sys.Date(), '.pdf', sep = ''),
     height = 10, width = 14)
+par(mar = c(0, 3, 0, 1), oma = c(3, 3, 0, 0))
 layout(matrix(c(rep(1:4, times = 4), 5:8), ncol=4, byrow=T))
-#par(mfrow = c(1, 4))
+ofs = 0.1
 
-bamm.plot(extant.phy3465, edata3465, extant.pops3465, colorbreaks = xx$colorbreaks)
+bamm.plot(extant.phy3465, edata3465, extant.pops3465, colorbreaks = xx$colorbreaks, offset = ofs)
+mtext("a)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
 
-bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
+bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k, offset = ofs)
+mtext("b)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
 
-bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, colorbreaks = xx$colorbreaks)
+bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k, colorbreaks = xx$colorbreaks, offset = ofs)
+mtext("c)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
 
-bamm.plot(extant.phy5625.30k, edata5625.30k, extant.pops5625.30k, colorbreaks = xx$colorbreaks)
+bamm.plot(extant.phy5625.30k, edata5625.30k, extant.pops5625.30k, colorbreaks = xx$colorbreaks, offset = ofs)
+mtext("d)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
 
-plotRateThroughTime(edata3465, axis.labels = F, yticks = 4)
+plotRateThroughTime(edata3465, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
 
-plotRateThroughTime(edata4065.30k, axis.labels = F, yticks = 4)
+plotRateThroughTime(edata4065.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
 
-plotRateThroughTime(edata5525.30k, axis.labels = F, yticks = 4)
+plotRateThroughTime(edata5525.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
 
-plotRateThroughTime(edata5625.30k, axis.labels = F, yticks = 4)
+plotRateThroughTime(edata5625.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
 
-mtext("Time before present", 1, outer=T)
+mtext("Time steps before present", 1, outer=T)
+mtext("Rate", 2, outer = T, adj = 0.12)
 
 dev.off()
 
