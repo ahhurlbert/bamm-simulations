@@ -207,8 +207,8 @@ bamm.plot = function(tree, edata, extantPops, colorbreaks = NULL, offset = 0.03)
   
   #Switch back to plot.bammdata if the quantile(na.rm = TRUE) gets fixed in source
   xx = plot.bammdata2(edata, lwd=1, colorbreaks = colorbreaks)  
-  cols = colorRampPalette(c('violet', 'white','darkgreen'))(10)
-  tiplabels(pch = 15, adj = (0.5 + offset), cex = 2, col = cols[home.regions$region])
+  cols = colorRampPalette(c('deeppink', 'white','springgreen'))(10)
+  tiplabels(pch = 15, adj = (0.5 + offset), cex = 3, col = cols[home.regions$region])
   return(xx)
 }
 
@@ -244,7 +244,7 @@ all.pops4065 = sim4065$all.populations
 #extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
 #edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
 extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
-extant.phy4065.30k = read.tree('sim4065-30k/extant_phy4065_30k.tre')
+extant.phy4065.30k = read.tree('sim4065-30k/run3/extant_phy4065_30k.tre')
 edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run3/sim4065_30k.run3_event_data.txt", burnin = burnInFrac)
 
 sim3465 = output.unzip('../species-energy-simulation/raw_sim_output', 3465)
@@ -265,8 +265,8 @@ all.pops5525 = sim5525$all.populations
 #extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
 #edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
 extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
-extant.phy5525.30k = read.tree('sim5525-30k/extant_phy5525_30k.tre')
-edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/sim5525_30k_event_data.txt", burnin = burnInFrac)
+extant.phy5525.30k = read.tree('sim5525-30k/run7/extant_phy5525_30k.tre')
+edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/run7/sim5525_30k.run7_event_data.txt", burnin = burnInFrac)
 
 sim5625 = output.unzip('../species-energy-simulation/raw_sim_output', 5625)
 all.pops5625 = sim5625$all.populations
@@ -281,7 +281,7 @@ edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/run2/s
 xx = plot.bammdata(edata4065.30k, show=F)
 
 # Sims at t=30000, paired with rate through time plots
-pdf('z:/manuscripts/frontierstropicaldiversity/bamm/rate_phylo_plot_4scenarios.pdf',
+pdf('rate_phylo_plot_4scenarios.pdf',
     height = 10, width = 14)
 layout(matrix(c(rep(1:4, times = 4), 5:8), ncol=4, byrow=T))
 #par(mfrow = c(1, 4))
@@ -304,6 +304,7 @@ plotRateThroughTime(edata5625.30k, axis.labels = F, yticks = 4)
 
 mtext("Time before present", 1, outer=T)
 
+dev.off()
 
 
 
@@ -313,8 +314,7 @@ mtext("Time before present", 1, outer=T)
 
 
 
-
-
+if(0) {
 
 #Plotting some of these sims at t=30k and t=100k
 #Need to make sure they are using the same color legend for comparison
@@ -375,6 +375,10 @@ mtext("Speciation rate", 2, outer=T, cex = 1.5)
 mtext("t = 100000", 1, outer = T, at = .9, line = 3)
 dev.off()
 
+edata4065.30k.4 = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run4/sim4065_30k.run4_event_data.txt", burnin = burnInFrac)
+edata4065.30k.5 = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run5/sim4065_30k.run5_event_data.txt", burnin = burnInFrac)
+edata4065.30k.6 = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run6/sim4065_30k.run6_event_data.txt", burnin = burnInFrac)
+
 # t = 30k
 pdf('specnRate_vs_latitude_4scenarios_30k.pdf', height = 8, width = 10)
 par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
@@ -384,10 +388,11 @@ plot.regLambda(4065, edata4065.30k, extant.pops4065.30k, "spline")
 mtext("Energy gradient", 3, line = 1)
 plot.regLambda(5525, edata5525.30k, extant.pops5525.30k, "spline")
 mtext("Speciation gradient", 3, line = 1)
-plot.regLambda(5625, edata3865, extant.pops3865, "spline")
+plot.regLambda(5625, edata5625.30k, extant.pops5625.30k, "spline")
 mtext("Disturbance gradient", 3, line = 1)
 mtext("Region", 1, outer=T, cex = 1.5)
 mtext("Speciation rate", 2, outer=T, cex = 1.5)
 mtext("t = 30000", 1, outer = T, at = .9, line = 3)
 dev.off()
 
+} #end if(0), unused code block
