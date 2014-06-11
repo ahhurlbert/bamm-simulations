@@ -287,7 +287,7 @@ xx = plot.bammdata(edata4065.30k, show=F)
 # Sims at t=30000, paired with rate through time plots
 pdf(paste('rate_phylo_plot_4scenarios_', Sys.Date(), '.pdf', sep = ''),
     height = 10, width = 14)
-par(mar = c(0, 3, 0, 1), oma = c(3, 3, 0, 0))
+par(mar = c(0, 4, 0, 2), oma = c(3, 3, 0, 0))
 layout(matrix(c(rep(1:4, times = 4), 5:8), ncol=4, byrow=T))
 ofs = 0.1
 
@@ -303,16 +303,16 @@ mtext("c)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
 bamm.plot(extant.phy5625.30k, edata5625.30k, extant.pops5625.30k, colorbreaks = xx$colorbreaks, offset = ofs)
 mtext("d)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
 
-plotRateThroughTime(edata3465, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
+plotRateThroughTime(edata3465, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'black')
 
-plotRateThroughTime(edata4065.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
+plotRateThroughTime(edata4065.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'black')
 
-plotRateThroughTime(edata5525.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
+plotRateThroughTime(edata5525.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'black')
 
-plotRateThroughTime(edata5625.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'gray50')
+plotRateThroughTime(edata5625.30k, axis.labels = F, yticks = 4, avgCol = 'black', intervalCol = 'black')
 
-mtext("Time steps before present", 1, outer=T)
-mtext("Rate", 2, outer = T, adj = 0.12)
+mtext("Time steps before present", 1, outer=T, cex = 1.5)
+mtext("Rate", 2, outer = T, adj = 0.12, cex = 1.5)
 
 dev.off()
 
