@@ -1,6 +1,6 @@
 Command line: bamm -c sim5525_30k_control_file.txt
-Random seed (clock): 1402091895
-Start time: Fri Jun  6 17:58:15 2014
+Random seed (clock): 1402422644
+Start time: Tue Jun 10 13:50:44 2014
 
 Current parameter settings:
             ExtinctionProbMax    0.999
@@ -60,3 +60,5 @@ Current parameter settings:
             updateRateMuShift    0.0
  useGlobalSamplingProbability    1
    writeMeanBranchLengthTrees    0
+End time: Thu Jun 12 08:00:36 2014
+
