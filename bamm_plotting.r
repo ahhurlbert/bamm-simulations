@@ -270,7 +270,7 @@ all.pops5525 = sim5525$all.populations
 #edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
 extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.phy5525.30k = read.tree('sim5525-30k/run7/extant_phy5525_30k.tre')
-edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/run7/sim5525_30k.run7_event_data.txt", burnin = burnInFrac)
+edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/run4/sim5525_30k.run4_event_data.txt", burnin = burnInFrac)
 
 sim5625 = output.unzip('../species-energy-simulation/raw_sim_output', 5625)
 all.pops5625 = sim5625$all.populations
