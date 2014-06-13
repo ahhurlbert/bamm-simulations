@@ -244,12 +244,12 @@ burnInFrac = 0.2
 
 sim4065 = output.unzip('../species-energy-simulation/raw_sim_output', 4065)
 all.pops4065 = sim4065$all.populations
-#extant.pops4065 = subset(all.pops4065, extant == 1)
-#extant.phy4065 = read.tree('sim4065/extant_phy4065.tre')
-#edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/sim4065_event_data.txt", burnin = burnInFrac)
+extant.pops4065 = subset(all.pops4065, extant == 1)
+extant.phy4065 = read.tree('sim4065/run1/extant_phy4065.tre')
+edata4065 = getEventData(extant.phy4065, eventdata = "sim4065/run3/sim4065.run3_event_data.txt", burnin = burnInFrac)
 extant.pops4065.30k = subset(all.pops4065, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.phy4065.30k = read.tree('sim4065-30k/run3/extant_phy4065_30k.tre')
-edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run3/sim4065_30k.run3_event_data.txt", burnin = burnInFrac)
+edata4065.30k = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run9/sim4065_30k.run9_event_data.txt", burnin = burnInFrac)
 
 sim3465 = output.unzip('../species-energy-simulation/raw_sim_output', 3465)
 all.pops3465 = sim3465$all.populations
@@ -257,29 +257,25 @@ extant.pops3465 = subset(all.pops3465, extant == 1)
 extant.phy3465 = read.tree('sim3465/run1/extant_phy3465.tre')
 edata3465 = getEventData(extant.phy3465, eventdata = "sim3465/run1/sim3465_event_data.txt", burnin = 0.05)
 
-#sim3865 = output.unzip('../species-energy-simulation/raw_sim_output', 3865)
-#all.pops3865 = sim3865$all.populations
-#extant.pops3865 = subset(all.pops3865, extant == 1)
-#extant.phy3865 = read.tree('sim3865/extant_phy3865.tre')
-#edata3865 = getEventData(extant.phy3865, eventdata = "sim3865/sim3865_event_data.txt", burnin = burnInFrac)
-
 sim5525 = output.unzip('../species-energy-simulation/raw_sim_output', 5525)
 all.pops5525 = sim5525$all.populations
-#extant.pops5525 = subset(all.pops5525, extant == 1)
-#extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
-#edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
+extant.pops5525 = subset(all.pops5525, extant == 1)
+extant.phy5525 = read.tree('sim5525/extant_phy5525.tre')
+edata5525 = getEventData(extant.phy5525, eventdata = "sim5525/sim5525_event_data.txt", burnin = burnInFrac)
 extant.pops5525.30k = subset(all.pops5525, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.phy5525.30k = read.tree('sim5525-30k/run7/extant_phy5525_30k.tre')
 edata5525.30k = getEventData(extant.phy5525.30k, eventdata = "sim5525-30k/run4/sim5525_30k.run4_event_data.txt", burnin = burnInFrac)
 
 sim5625 = output.unzip('../species-energy-simulation/raw_sim_output', 5625)
 all.pops5625 = sim5625$all.populations
-#extant.pops5625 = subset(all.pops5625, extant == 1)
-#extant.phy5625 = read.tree('sim5625/extant_phy5625.tre')
-#edata5625 = getEventData(extant.phy5625, eventdata = "sim5625/sim5625_event_data.txt", burnin = burnInFrac)
+extant.pops5625 = subset(all.pops5625, extant == 1)
+extant.phy5625 = read.tree('sim5625/run1/extant_phy5625.tre')
+edata5625 = getEventData(extant.phy5625, eventdata = "sim5625/run2/sim5625.run2_event_data.txt", burnin = burnInFrac)
 extant.pops5625.30k = subset(all.pops5625, time.of.origin <= 30000 & time.of.extinction > 30000)
 extant.phy5625.30k = read.tree('sim5625-30k/run2/extant_phy5625_30k.tre')
 edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/run2/sim5625_30k.run2_event_data.txt", burnin = burnInFrac)
+
+if (1) {
 
 # Use color legend of sim4065-30k for all plots
 xx = plot.bammdata(edata4065.30k, show=F)
@@ -315,94 +311,84 @@ mtext("Time steps before present", 1, outer=T, cex = 1.5)
 mtext("Rate", 2, outer = T, adj = 0.12, cex = 1.5)
 
 dev.off()
-
-
-
-
-
-
-
-
-
-if(0) {
-
-#Plotting some of these sims at t=30k and t=100k
-#Need to make sure they are using the same color legend for comparison
-pdf('bammplot_4_scenarios.pdf', height = 8, width = 10)
-par(mfrow = c(1,2))
-#Page 1
-yy = bamm.plot(extant.phy5525.30k, edata5525.30k, extant.pops5525.30k)
-mtext("Sim 5525, Speciation gradient, t = 30k", 3)
-bamm.plot(extant.phy5525, edata5525, extant.pops5525, yy$colorbreaks)
-mtext("Sim 5525, Speciation gradient, t = 100k", 3)
-#Page 2
-xx = bamm.plot(extant.phy4065.30k, edata4065.30k, extant.pops4065.30k)
-mtext("Sim 4065, Energy gradient, t = 30k", 3)
-bamm.plot(extant.phy4065, edata4065, extant.pops4065, xx$colorbreaks)
-mtext("Sim 4065, Energy gradient, t = 100k", 3)
-#Page 3
-bamm.plot(extant.phy3865, edata3865, extant.pops3865)
-mtext("Sim 3865, Disturbance gradient, t = 30k", 3)
-bamm.plot(extant.phy5625, edata5625, extant.pops5625)
-mtext("Sim 5625, Disturbance gradient, t = 100k", 3)
-#Page 4
-bamm.plot(extant.phy3465, edata3465, extant.pops3465)
-mtext("Sim 3465, Niche conservatism", 3)
-
-dev.off()
-
+}
 
 ####################################################
 # Plotting tip-specific speciation rates versus region
-
-plot.regLambda = function(simID, edata, extant.pops, fitline = NULL) {
-  specnRates = data.frame(spp.name = edata$tip.label, Lambda = edata$meanTipLambda)
-  extantRates = merge(extant.pops, specnRates, by = 'spp.name', all.x = T)
-  regRates = aggregate(extantRates$Lambda, by = list(extantRates$region), function(x) mean(x, na.rm=T))
-  plot(extantRates$region, extantRates$Lambda, xlab = '', ylab = '', xaxt = 'n')
-  if (fitline == "spline") {
-    points(smooth.spline(extantRates$region[is.na(extantRates$Lambda)==F], extantRates$Lambda[is.na(extantRates$Lambda)==F], df = 4),type='l',col='red')
-  } else if (fitline == "linear") {
-    abline(lm(extantRates$Lambda ~ extantRates$region), col = 'red')
-  }
-  mtext("Temperate", 1, adj = 0, cex = .75)
-  mtext("Tropical", 1, adj = 1, cex = .75)
+if(0) {
+regRates = function(edata, extant.pops, write = F, filename = NULL) {
+    specnRates = data.frame(spp.name = edata$tip.label, Lambda = edata$meanTipLambda)
+    extantRates = merge(extant.pops, specnRates, by = 'spp.name', all.x = T)
+    regMean = aggregate(extantRates$Lambda, by = list(extantRates$region), function(x) mean(x, na.rm=T))
+    regSD = aggregate(extantRates$Lambda, by = list(extantRates$region), function(x)
+      var(x, na.rm = T)^0.5)
+    regData = cbind(regMean, regSD[,2])
+    names(regData) = c('region', 'meanLambda', 'SDlambda')
+    if (write) {
+      write.csv(regData, filename, row.names = F)
+    }
+    return(regData)
 }
 
-# t = 100k
-pdf('specnRate_vs_latitude_4scenarios_100k.pdf', height = 8, width = 10)
-par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
-plot.regLambda(3465, edata3465, extant.pops3465, "spline")
-mtext("Niche conservatism", 3, line = 1)
-plot.regLambda(4065, edata4065, extant.pops4065, "spline")
-mtext("Energy gradient", 3, line = 1)
-plot.regLambda(5525, edata5525, extant.pops5525, "spline")
-mtext("Speciation gradient", 3, line = 1)
-plot.regLambda(5625, edata5625, extant.pops5625, "spline")
-mtext("Disturbance gradient", 3, line = 1)
-mtext("Region", 1, outer=T, cex = 1.5)
-mtext("Speciation rate", 2, outer=T, cex = 1.5)
-mtext("t = 100000", 1, outer = T, at = .9, line = 3)
-dev.off()
+reg3465 = regRates(edata3465, extant.pops3465, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates3465.csv')
+reg4065.30k = regRates(edata4065.30k, extant.pops4065.30k, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates4065-30k.csv')
+reg5625.30k = regRates(edata5625.30k, extant.pops5625.30k, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates5625-30k.csv')
+reg5525.30k = regRates(edata5525.30k, extant.pops5525.30k, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates5525-30k.csv')
 
-edata4065.30k.4 = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run4/sim4065_30k.run4_event_data.txt", burnin = burnInFrac)
-edata4065.30k.5 = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run5/sim4065_30k.run5_event_data.txt", burnin = burnInFrac)
-edata4065.30k.6 = getEventData(extant.phy4065.30k, eventdata = "sim4065-30k/run6/sim4065_30k.run6_event_data.txt", burnin = burnInFrac)
+
+  
+plot.regLambda = function(rates, y.lim = NULL) {
+  plot(rates$region, rates$meanLambda, pch = 16, cex = 2, 
+       xlab = '', ylab = '', xaxt = 'n', ylim = y.lim, xlim = c(1,10))
+  segments(rates$region, rates$meanLambda + rates$SDlambda, rates$region, 
+             rates$meanLambda - rates$SDlambda, lwd = 2)
+  mtext("Temperate", 1, adj = 0, cex = 1, line = 1)
+  mtext("Tropical", 1, adj = 1, cex = 1, line = 1)
+}
+
 
 # t = 30k
-pdf('specnRate_vs_latitude_4scenarios_30k.pdf', height = 8, width = 10)
-par(mfrow = c(2, 2), oma = c(4, 4, 0, 0), mar = c(4, 5, 3, 1), las = 0)
-plot.regLambda(3465, edata3465, extant.pops3465, "spline")
-mtext("Niche conservatism", 3, line = 1)
-plot.regLambda(4065, edata4065.30k, extant.pops4065.30k, "spline")
-mtext("Energy gradient", 3, line = 1)
-plot.regLambda(5525, edata5525.30k, extant.pops5525.30k, "spline")
-mtext("Speciation gradient", 3, line = 1)
-plot.regLambda(5625, edata5625.30k, extant.pops5625.30k, "spline")
-mtext("Disturbance gradient", 3, line = 1)
+pdf(paste('specnRate_vs_latitude_4scenarios_30k', Sys.Date(), '.pdf', sep = ''), 
+    height = 4, width = 12)
+par(mfcol = c(1, 4), oma = c(2, 4, 0, 0), mar = c(4, 5, 3, 1), las = 1, cex.axis = 1.25)
+plot.regLambda(reg3465, y.lim = c(.05, .052))
+cex.lett = 1.5
+mtext("a)", 2, line = 2.4, at = 0.05224, cex = cex.lett)
+
+plot.regLambda(reg4065.30k, y.lim = c(0, 6e-4))
+mtext("b)", 2, line = 2.4, at = 6.7e-4, cex = cex.lett)
+
+plot.regLambda(reg5525.30k, y.lim = c(0, 6e-4))
+mtext("c)", 2, line = 2.4, at = 6.7e-4, cex = cex.lett)
+
+plot.regLambda(reg5625.30k, y.lim = c(0, 6e-4))
+mtext("d)", 2, line = 2.4, at = 6.7e-4, cex = cex.lett)
+
 mtext("Region", 1, outer=T, cex = 1.5)
-mtext("Speciation rate", 2, outer=T, cex = 1.5)
-mtext("t = 30000", 1, outer = T, at = .9, line = 3)
+mtext("Speciation rate", 2, outer=T, cex = 1.5, las = 0, line = 2)
 dev.off()
 
-} #end if(0), unused code block
+
+reg4065 = regRates(edata4065, extant.pops4065, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates4065.csv')
+reg5625 = regRates(edata5625, extant.pops5625, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates5625.csv')
+reg5525 = regRates(edata5525, extant.pops5525, write = T, 'z:/manuscripts/frontierstropicaldiversity/bamm/regrates5525.csv')
+
+pdf(paste('specnRate_vs_latitude_4scenarios_100k', Sys.Date(), '.pdf', sep = ''), 
+    height = 4, width = 9)
+par(mfcol = c(1, 3), oma = c(2, 4, 0, 0), mar = c(4, 5, 3, 1), las = 1, cex.axis = 1.25)
+cex.lett = 1.5
+
+plot.regLambda(reg4065, y.lim = c(0, 6e-4))
+mtext("a)", 2, line = 2.4, at = 6.7e-4, cex = cex.lett)
+
+plot.regLambda(reg5525, y.lim = c(0, 6e-4))
+mtext("b)", 2, line = 2.4, at = 6.7e-4, cex = cex.lett)
+
+plot.regLambda(reg5625, y.lim = c(0, 6e-4))
+mtext("c)", 2, line = 2.4, at = 6.7e-4, cex = cex.lett)
+
+mtext("Region", 1, outer=T, cex = 1.5)
+mtext("Speciation rate", 2, outer=T, cex = 1.5, las = 0, line = 2)
+dev.off()
+
+}
