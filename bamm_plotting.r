@@ -392,3 +392,26 @@ mtext("Speciation rate", 2, outer=T, cex = 1.5, las = 0, line = 2)
 dev.off()
 
 }
+
+#Plot of number of rate shifts expected under the 4 scenarios
+foo5525.30k = summary(edata5525.30k)
+foo5525 = rbind(data.frame(shifts=1:6, prob = rep(0,6)), foo)
+foo4065 = summary(edata4065.30k)
+foo4065 = rbind(data.frame(shifts=1:2, prob=c(0,0)), foo4065)
+foo5625 = summary(edata5625.30k)
+foo5625 = rbind(data.frame(shifts=1, prob=0), foo5625)
+foo3465 = summary(edata3465)
+
+pdf('rate_shifts_4scenarios.pdf', height = 4, width = 5)
+plot(log10(foo5525$shifts), foo5525$prob, type = 'l', ylim = c(0, 0.7), 
+     xlab = "log10 Number of rate shifts", ylab = "Probability")
+points(log10(foo4065$shifts), foo4065$prob, type = 'l', col = 'red')
+points(log10(foo5625$shifts), foo5625$prob, type = 'l', col = 'blue')
+points(log10(foo3465$shifts), foo3465$prob, type = 'l', col = 'springgreen1')
+text(0.06, 0.7, "Pure niche conservatism", col = 'springgreen1', adj = 0)
+text(0.33, 0.6, "Disturbance gradient", col = 'blue', adj = 0)
+text(0.75, 0.5, "Energy gradient", col = 'red', adj = 0)
+text(.9, 0.2, "Speciation gradient", adj = 0)
+dev.off()
+
+
