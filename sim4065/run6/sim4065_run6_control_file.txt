@@ -59,7 +59,7 @@ sampleProbsFilename = sample_probs.txt
 # Seed for the random number generator. 
 # If not specified (or is -1), a seed is obtained from the system clock
 
-overwrite = 0
+overwrite = 1
 # If True (1), the program will overwrite any output files in the current
 # directory (if present)
 
@@ -96,14 +96,14 @@ lambdaIsTimeVariablePrior = 1
 # MCMC SIMULATION SETTINGS & OUTPUT OPTIONS
 ################################################################################
 
-numberOfGenerations = 10000
+numberOfGenerations = 1000000
 # Number of generations to perform MCMC simulation
 
 mcmcOutfile = mcmc_out.txt
 # File name for the MCMC output, which only includes summary information about
 # MCMC simulation (e.g., log-likelihoods, log-prior, number of processes)
 
-mcmcWriteFreq = 1000
+mcmcWriteFreq = 5000
 # Frequency in which to write the MCMC output to a file
 
 eventDataOutfile = event_data.txt
@@ -112,13 +112,13 @@ eventDataOutfile = event_data.txt
 # positions, marginal distributions etc can be reconstructed from this output.
 # See R package BAMMtools for working with this output
 
-eventDataWriteFreq = 1000
+eventDataWriteFreq = 5000
 # Frequency in which to write the event data to a file
 
-printFreq = 1000
+printFreq = 5000
 # Frequency in which to print MCMC status to the screen
 
-acceptanceResetFreq = 1000
+acceptanceResetFreq = 5000
 # Frequency in which to reset the acceptance rate calculation
 # The acceptance rate is output to both the MCMC data file and the screen
 
