@@ -275,7 +275,8 @@ extant.pops5625.30k = subset(all.pops5625, time.of.origin <= 30000 & time.of.ext
 extant.phy5625.30k = read.tree('sim5625-30k/run2/extant_phy5625_30k.tre')
 edata5625.30k = getEventData(extant.phy5625.30k, eventdata = "sim5625-30k/run2/sim5625_30k.run2_event_data.txt", burnin = burnInFrac)
 
-if (1) {
+if (1) { ############# THIS SECTION NO LONGER WORKS DUE TO DEPRECATED bamm.plot FUNCTION
+         #############       SEE BELOW FOR NEW CODE USING plot.bammdata
 
 # Use color legend of sim4065-30k for all plots
 xx = plot.bammdata(edata4065.30k, show=F)
@@ -312,6 +313,32 @@ mtext("Rate", 2, outer = T, adj = 0.12, cex = 1.5)
 
 dev.off()
 }
+########### END DEPRECATED SECTION ######################################
+
+#### NEW CODE USING plot.bammdata
+if (1) {
+  
+  # Use color legend of sim4065-30k for all plots
+  xx = plot.bammdata(edata4065.30k, show=F)
+  
+  # Sims at t=30000, paired with rate through time plots
+  pdf(paste('rate_phylo_plot_4scenarios_', Sys.Date(), '.pdf', sep = ''),
+      height = 50, width = 14)
+  par(mar = c(0, 4, 0, 2), oma = c(3, 3, 0, 0), mfrow = c(1, 3))
+
+  plot.bammdata(edata3465, colorbreaks = xx$colorbreaks)
+  mtext("a)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
+  
+  plot.bammdata(edata4065.30k, colorbreaks = xx$colorbreak)
+  mtext("b)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
+  
+  plot.bammdata(edata5525.30k, colorbreaks = xx$colorbreak)
+  mtext("c)", 2, las = 1, at = 1, outer=F, line = 1, cex = 1.5)
+  
+  dev.off()
+}
+
+
 
 ####################################################
 # Plotting tip-specific speciation rates versus region
